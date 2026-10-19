@@ -1,19 +1,38 @@
-
 version: 2
-
 sources:
-
-
-
-  name: raw
-  schema: gz_raw_data
-  tables:
-
-    name: sales
-    identifier: raw_gz_sales
-
-    name: product
-    identifier: raw_gz_product
-
-    name: ship
-    identifier: raw_gz_ship
+  - name: raw
+    schema: gz_raw_data
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        columns:
+          - name: data_data
+            description: sales date of products
+          - name: orders_id
+            description: identifier of order
+          - name: pdt_id
+            description: unique identifier of products
+          - name: revenue
+            description: describing of income for the sales line
+          - name: quantity
+            description: description of order amount
+      - name: ship
+        identifier: raw_gz_ship
+        columns:
+          - name: orders_id
+            description: unique identifier of order
+          - name: shipping_fee
+            description: cost of fee or tax of the order
+          - name: shipping_fee_1
+            description: cost of fee or tax of the order
+          - name: logCost
+            description: represents all expenses required to move goods through the supply chain from origin to destination
+          - name: ship_cost
+            description: expenses of shipment
+      - name: product
+        identifier: raw_gz_product
+        columns:
+          - name: products_id
+            description: unique identifier of products
+          - name: purchSE_PRICE
+            description: sales price of the product
