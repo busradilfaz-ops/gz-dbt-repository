@@ -44,8 +44,6 @@ sources:
               - not_null
           - name: shipping_fee
             description: cost of fee or tax of the order
-          - name: shipping_fee_1
-            description: cost of fee or tax of the order
           - name: logCost
             description: represents all expenses required to move goods through the supply chain from origin to destination
           - name: ship_cost
