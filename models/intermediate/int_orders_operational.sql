@@ -1,12 +1,18 @@
-select 
-o.orders_id,
-o.date_date,
-round(sum(o.margin+ coalesce(sh.shipping_fee, 0)- coalesce(sh.logcost, 0)- coalesce(sh.ship_cost, 0)),2) as operational_margin
-from {{ ref('stg_raw__ship')}} sh
-left join {{ ref ('int_orders_margin')}} o
-using(orders_id)
-group by o.orders_id, o.date_date
-order by o.orders_id desc
+SELECT
+	o.orders_id
+	,o.date_date
+	,ROUND(o.margin + sh.shipping_fee - (sh.logcost + sh.ship_cost),2) AS operational_margin
+	,o.quantity
+	,o.revenue
+	,o.purchase_cost
+	,o.margin
+	,sh.shipping_fee
+	,sh.logcost
+	,sh.ship_cost
+FROM {{ref("int_orders_margin")}} o
+LEFT JOIN {{ref("stg_raw__ship")}} sh
+	USING(orders_id)
+ORDER BY orders_id desc
 
 
 
