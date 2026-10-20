@@ -2,25 +2,46 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
+    
     tables:
       - name: sales
         identifier: raw_gz_sales
+        config:
+          loaded_at_field: data_data
+          freshness:
+            warn_after:
+              count: 90
+              period: day
+        data_tests:
+          - dbt_utils.unique_combination_of_columns:
+              arguments:
+                combination_of_columns:
+                  - orders_id
+                  - pdt_id
         columns:
           - name: data_data
             description: sales date of products
           - name: orders_id
             description: identifier of order
+            tests:
+              - not_null
           - name: pdt_id
             description: unique identifier of products
+            tests:
+              - not_null
           - name: revenue
             description: describing of income for the sales line
           - name: quantity
             description: description of order amount
+
       - name: ship
         identifier: raw_gz_ship
         columns:
           - name: orders_id
             description: unique identifier of order
+            tests:
+              - unique
+              - not_null
           - name: shipping_fee
             description: cost of fee or tax of the order
           - name: shipping_fee_1
@@ -34,5 +55,8 @@ sources:
         columns:
           - name: products_id
             description: unique identifier of products
+            tests:
+              - unique
+              - not_null
           - name: purchSE_PRICE
             description: sales price of the product
